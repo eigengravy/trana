@@ -13,7 +13,7 @@ function App() {
       {!uploaded ? (
         <UploadModal />
       ) : (
-        <div className="absolute w-[30vw] bottom-5 right-5 h-[60vh]">
+        <div className="absolute w-[100vw] bottom-0 right-0 h-[100vh]">
           <Chat />
         </div>
       )}

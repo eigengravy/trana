@@ -39,6 +39,17 @@ class FilesViewSet(viewsets.ModelViewSet):
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=400)
         
+class ScrapperViewSet(viewsets.ViewSet):
+    @action(detail=False, methods=['post'])
+    def queries(self, request): 
+        data = json.loads(request.body.decode('utf-8'))
+        site_url=data.get('url')
+        
+        print(site_url)
+        # print(response)
+        
+        # return JsonResponse({'messages': messages, 'response' : response})
+        return JsonResponse({'response' : f"Url received {site_url}"})
 
 class ChatViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['post'])

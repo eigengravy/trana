@@ -105,12 +105,17 @@ export default function Chat() {
       //     console.log(error);
       //   });
       messages = messages.concat([
-        { role: "assistant", content: "Hi how can i help you today. Wat ra sudheep!!!" },
+        {
+          role: "assistant",
+          content: "Hi how can i help you today. Wat ra sudheep!!!",
+        },
       ]);
       setMessagesOld(messages);
       // console.log("ooooooooo", messages);
       setTimeout(() => {
-        convo = convo.concat(["Hi how can i help you today. Wat ra sudheep!!!"]);
+        convo = convo.concat([
+          "Hi how can i help you today. Wat ra sudheep!!!",
+        ]);
         setChat(convo);
         setLoading(false);
         //@ts-ignore
@@ -132,24 +137,32 @@ export default function Chat() {
           {chat.map((chat, index) => (
             <div
               key={index}
-              className={`w-[85%] md:w-[90%] max-w-[55rem] -ml-6 gap-4 px-2 md:px-4 py-3.5 md:py-5 relative flex-row items-start ${
-                index % 2 === 0 ? "" : "bg-[#313131] rounded-[10px] "
+              className={`w-[85%] md:w-[90%] max-w-[55rem] -ml-6 relative flex-row items-start ${
+                index % 2 === 0 ? "justify-end" : "justify-start"
               }
               ${index === 0 ? "hidden" : "flex"}
               `}
             >
-              {index % 2 === 0 ? (
-                <UserOutlined className="bg-[#919191] w-10 h-10 flex justify-center text-black text-opacity-60 text-[1.7rem] rounded-full p-1" />
-              ) : (
-                // <CrownFilled className="bg-[#919191] text-black text-[1.7rem] rounded-[10px] p-1" />
-                <img src={logoBW} className="w-10 h-10 " />
-              )}
-
-              <Typography className="text-white whitespace-pre-wrap text-opacity-90 text-base font-inter tracking-wider">
-                {chat}
-              </Typography>
               <div
-                className={`absolute top-3 md:top-6 left-full ml-2 gap-5 md:gap-3 flex flex-col items-start ${
+                className={`w-fit flex flex-row gap-4 px-2 md:px-4 py-3.5 md:py-5 ${
+                  index % 2 === 0 ? "" : "bg-[#313131] rounded-[10px] "
+                }`}
+              >
+                {index % 2 !== 0 && (
+                  // <CrownFilled className="bg-[#919191] text-black text-[1.7rem] rounded-[10px] p-1" />
+                  <img src={logoBW} className="w-10 h-10 " />
+                )}
+
+                <Typography className="text-white whitespace-pre-wrap text-opacity-90 text-base font-inter tracking-wider">
+                  {chat}
+                </Typography>
+
+                {index % 2 === 0 && (
+                  <UserOutlined className="bg-[#919191] w-10 h-10 flex justify-center text-black text-opacity-60 text-[1.7rem] rounded-full p-1" />
+                )}
+              </div>
+              <div
+                className={`ml-2 gap-5 md:gap-3 pt-3.5 md:pt-5 flex flex-col items-start ${
                   index % 2 === 0 ? "hidden" : "flex"
                 }`}
               >

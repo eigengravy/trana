@@ -27,75 +27,33 @@ export default function UploadModal() {
     setUrl,
   } = useContext(GlobalContext);
 
-  const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
   const [csvfile, setCsvfile] = useState<any>();
 
-  useEffect(() => {
-    if (url !== "") setDone(true);
-    else setDone(false);
-  }, [userPrompt]);
-
-  // const handleFileUpload = ({ file }: any) => {
-  //   let formData = new FormData();
-  //   formData.append("csv", file, file.name);
-
-  //   axios
-  //     .post("http://127.0.0.1:8000/api/files/", formData, {
-  //       headers: {
-  //         "Content-Type": "multpart/form-data",
-  //       },
-  //       onUploadProgress: (event) => {
-  //         console.log(event);
-  //         setCsvfile({
-  //           name: file.name,
-  //           progress: event.progress,
-  //         });
-  //       },
-  //     })
-  //     .then((response) => {
-  //       console.log(response);
-  //       if (response.status === 201) {
-  //         message.success(`${file.name} uploaded successfully.`);
-  //         setCsvfile({
-  //           name: file.name,
-  //           progress: 1,
-  //           download: response.data.csv,
-  //           id: response.data.id,
-  //         });
-  //         setDone(true);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       message.error(`${file.name} upload failed.`);
-  //       setDone(false);
-  //     });
-  // };
-
   const handleSubmit = () => {
     setLoading(true);
-    setUploaded(true);
-    // const data = `id=${csvfile.id}`;
-    // console.log(data);
-    // axios
-    //   .post("http://localhost:8000/api/files/formatter/", data, {
-    //     headers: {
-    //       "Content-Type": "application/x-www-form-urlencoded",
-    //     },
-    //   })
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     setText(response.data.formatted_text);
-    //     setTimeout(() => {
-    //       setUploaded(true);
-    //       setLoading(false);
-    //     }, 1000);
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //     console.log(error);
-    //   });
+    const data = JSON.stringify({
+      url: url,
+    });
+    console.log(data);
+    axios
+      .post("http://localhost:8000/api/scrape/queries/", data, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        message.success(`Site data received`);
+        setTimeout(() => {
+          setUploaded(true);
+          setLoading(false);
+        }, 500);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
   };
 
   return (
