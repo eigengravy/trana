@@ -114,7 +114,7 @@ export default function Chat() {
       // console.log("ooooooooo", messages);
       setTimeout(() => {
         convo = convo.concat([
-          "Hi how can i help you today. Wat ra sudheep!!!",
+          "Hi how can i help you today. Wat ra sudheep!!! some more text for line break",
         ]);
         setChat(convo);
         setLoading(false);
@@ -133,11 +133,11 @@ export default function Chat() {
           <img src={logo} className="w-10 h-10 mx-2" />
           sensei.csv
         </div>
-        <Content className="max-w-[100vw] overflow-y-auto bg-[#202123] flex flex-col items-center pt-6">
+        <Content className="max-w-[100vw] overflow-y-auto bg-[#202123] flex flex-col gap-4 items-center pt-6">
           {chat.map((chat, index) => (
             <div
               key={index}
-              className={`w-[85%] md:w-[90%] max-w-[55rem] -ml-6 relative flex-row items-start ${
+              className={`w-[85%] md:w-[90%] max-w-[55rem] relative flex-row items-start ${
                 index % 2 === 0 ? "justify-end" : "justify-start"
               }
               ${index === 0 ? "hidden" : "flex"}
@@ -145,7 +145,7 @@ export default function Chat() {
             >
               <div
                 className={`w-fit flex flex-row gap-4 px-2 md:px-4 py-3.5 md:py-5 ${
-                  index % 2 === 0 ? "" : "bg-[#313131] rounded-[10px] "
+                  index % 2 === 0 ? "bg-[#233556] rounded-[10px] " : "bg-[#313131] rounded-[10px] "
                 }`}
               >
                 {index % 2 !== 0 && (
