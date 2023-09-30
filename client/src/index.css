@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Inter',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.font-inter {
+  font-family: "Inter", Inter;
+}
+
+.ant-btn:hover {
+  border-color: #ffffffb7 !important;
+  color: #ffffffb7 !important;
+  transition: all 0.3s;
+}
+
+.ant-upload-drag {
+  border-color: #919191 !important;
+}
+
+.ant-upload-drag:hover {
+  border-color: #ffffffb7 !important;
+  background-color: #ffffff0c !important;
+}
+
+.ant-progress {
+  height: 0px !important;
+}
+
+.ant-progress-inner {
+  height: 3px !important;
+}
+
+.ant-progress-bg {
+  background-color: #919191 !important;
+}
+
+.chat-input:focus {
+  border-color: #505050;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
+  border-inline-end-width: 1px;
+  outline: 0;
+}
+
+.chat-input:hover {
+  border-color: #505050;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
+  border-inline-end-width: 1px;
+  outline: 0;
+}
+
+.ant-spin-dot-item {
+  background-color: aliceblue !important;
+}
