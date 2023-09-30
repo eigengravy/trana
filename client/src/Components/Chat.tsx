@@ -44,25 +44,26 @@ export default function Chat() {
   useEffect(() => {
     if (uploaded) {
       // console.log(uploaded);
-      let prompt = `You have just received a CSV file containing data. The data in the CSV file is as follows: "${text}".You are now the "CSV Sensei", an AI expert in data analysis.
-      Your primary task is to assist the user by providing precise quantitative data insights and answers to their queries regarding the uploaded data.To start the
-      interaction, respond with a welcoming message: "Hi, I am CSV Sensei. How may I assist you today?" Then, provide a summary of the key data points and trends 
-      present in the uploaded CSV file. Focus on highlighting valuable insights that can be derived from the data using conventional data science methods and analysis 
-      techniques.As you respond to user queries, make sure your answers are insightful, informative, and based on your analysis of the data. Your goal is to provide 
-      actionable insights and help the user gain a deeper understanding of the information contained in the CSV file.Remember, your expertise lies in delivering data-driven 
-      insights that go beyond a simple copy of the data. Provide valuable answers that empower the user with knowledge they can use to make informed decisions or conclusions 
-      about the data.`;
-      let extra = `The user has provided some additional information or analysis preferences as follows "${userPrompt}". Analyze the user's input and
-       incorporate it into your responses as needed. For example, if the user mentions a specific analysis method they want to be used, acknowledge it and apply the
-       method in your responses.`;
-      let query = userPrompt && userPrompt.length > 0 ? prompt + extra : prompt;
+      // let prompt = `You have just received a CSV file containing data. The data in the CSV file is as follows: "${text}".You are now the "CSV Sensei", an AI expert in data analysis.
+      // Your primary task is to assist the user by providing precise quantitative data insights and answers to their queries regarding the uploaded data.To start the
+      // interaction, respond with a welcoming message: "Hi, I am CSV Sensei. How may I assist you today?" Then, provide a summary of the key data points and trends
+      // present in the uploaded CSV file. Focus on highlighting valuable insights that can be derived from the data using conventional data science methods and analysis
+      // techniques.As you respond to user queries, make sure your answers are insightful, informative, and based on your analysis of the data. Your goal is to provide
+      // actionable insights and help the user gain a deeper understanding of the information contained in the CSV file.Remember, your expertise lies in delivering data-driven
+      // insights that go beyond a simple copy of the data. Provide valuable answers that empower the user with knowledge they can use to make informed decisions or conclusions
+      // about the data.`;
+      // let extra = `The user has provided some additional information or analysis preferences as follows "${userPrompt}". Analyze the user's input and
+      //  incorporate it into your responses as needed. For example, if the user mentions a specific analysis method they want to be used, acknowledge it and apply the
+      //  method in your responses.`;
+      // let query = userPrompt && userPrompt.length > 0 ? prompt + extra : prompt;
+      let query = "Hi how can i help you today.";
       handleQuery(query);
     }
   }, [uploaded]);
 
   const handleQuery = (query: string) => {
     setLoading(true);
-    // console.log("Query : ", query);
+    console.log("Query : ", query);
     let convo = chat;
     let messages = messagesOld.concat([{ role: "user", content: query }]);
     if (query !== "") {
@@ -72,52 +73,66 @@ export default function Chat() {
       const element = document.getElementById("chat-bottom");
       //@ts-ignore
       // element.scrollIntoView("smooth");
-      const data = JSON.stringify({
-        messages: messages,
-      });
+      // const data = JSON.stringify({
+      //   messages: messages,
+      // });
       // console.log(data);
-      axios
-        .post("http://localhost:8000/api/chat/queries/", data, {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        })
-        .then((response) => {
-          // console.log(response.data);
-          messages = messages.concat([
-            { role: "assistant", content: response.data.response },
-          ]);
-          setMessagesOld(messages);
-          // console.log("ooooooooo", messages);
-          setTimeout(() => {
-            convo = convo.concat([response.data.response]);
-            setChat(convo);
-            setLoading(false);
-            //@ts-ignore
-            element.scrollIntoView({
-              behavior: "smooth",
-            });
-          }, 500);
-        })
-        .catch((error) => {
-          setLoading(false);
-          console.log(error);
+      // axios
+      //   .post("http://localhost:8000/api/chat/queries/", data, {
+      //     headers: {
+      //       "Content-Type": "application/x-www-form-urlencoded",
+      //     },
+      //   })
+      //   .then((response) => {
+      //     // console.log(response.data);
+      //     messages = messages.concat([
+      //       { role: "assistant", content: response.data.response },
+      //     ]);
+      //     setMessagesOld(messages);
+      //     // console.log("ooooooooo", messages);
+      //     setTimeout(() => {
+      //       convo = convo.concat([response.data.response]);
+      //       setChat(convo);
+      //       setLoading(false);
+      //       //@ts-ignore
+      //       element.scrollIntoView({
+      //         behavior: "smooth",
+      //       });
+      //     }, 500);
+      //   })
+      //   .catch((error) => {
+      //     setLoading(false);
+      //     console.log(error);
+      //   });
+      messages = messages.concat([
+        { role: "assistant", content: "Hi how can i help you today. Wat ra sudheep!!!" },
+      ]);
+      setMessagesOld(messages);
+      // console.log("ooooooooo", messages);
+      setTimeout(() => {
+        convo = convo.concat(["Hi how can i help you today. Wat ra sudheep!!!"]);
+        setChat(convo);
+        setLoading(false);
+        //@ts-ignore
+        element.scrollIntoView({
+          behavior: "smooth",
         });
+      }, 500);
     }
   };
 
   return (
-    <div className="w-full min-h-[100vh] relative flex flex-col items-center font-inter">
-      <Layout className="w-full">
+    <div className="w-full h-full relative flex flex-col items-center font-inter">
+      <Layout className="w-full relative">
         <div className="sticky top-0 h-fit z-10 bg-[#202123] flex items-center p-2 text-2xl font-bold font-mono text-white border-b-2 border-[#505050]">
           <img src={logo} className="w-10 h-10 mx-2" />
           sensei.csv
         </div>
-        <Content className="max-w-[100vw] overflow-hidden bg-[#202123] flex flex-col items-center pt-6">
+        <Content className="max-w-[100vw] overflow-y-auto bg-[#202123] flex flex-col items-center pt-6">
           {chat.map((chat, index) => (
             <div
               key={index}
-              className={`w-[90%] max-w-[55rem] gap-4 px-4 py-5 relative flex-row items-start ${
+              className={`w-[85%] md:w-[90%] max-w-[55rem] -ml-6 gap-4 px-2 md:px-4 py-3.5 md:py-5 relative flex-row items-start ${
                 index % 2 === 0 ? "" : "bg-[#313131] rounded-[10px] "
               }
               ${index === 0 ? "hidden" : "flex"}
@@ -134,7 +149,7 @@ export default function Chat() {
                 {chat}
               </Typography>
               <div
-                className={`absolute top-20 md:top-6 md:left-full ml-2 gap-5 md:gap-3 flex flex-col items-start ${
+                className={`absolute top-3 md:top-6 left-full ml-2 gap-5 md:gap-3 flex flex-col items-start ${
                   index % 2 === 0 ? "hidden" : "flex"
                 }`}
               >
