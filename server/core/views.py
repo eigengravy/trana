@@ -55,27 +55,10 @@ class ChatViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['post'])
     def queries(self, request): 
         data = json.loads(request.body.decode('utf-8'))
-        messages=data.get('messages')
+        query=data.get('query')
 
-        url = settings.GPT_URL
-        
-        payload = json.dumps({
-          "transforms": ["middle-out"],
-          "model": "openai/gpt-3.5-turbo",
-          "messages": messages
-        })
-        headers = {
-          'HTTP-Referer': settings.SITE_URL,
-          'X-Title': settings.SITE_NAME,
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+settings.API_KEY
-        }
-        
-        response = json.loads(requests.request("POST", url, headers=headers, data=payload).text)
-        # print(response)
-
-        answer = response['choices'][0]['message']['content']
-        # print(answer)
+        # url = settings.GPT_URL
+        answer = "Hi... How can i help you today. Wat ra Sudheep!!! Some more text for line break."
         
         # return JsonResponse({'messages': messages, 'response' : response})
         return JsonResponse({'response' : answer})

@@ -25,6 +25,7 @@ export default function UploadModal() {
     userPrompt,
     url,
     setUrl,
+    windowed,
   } = useContext(GlobalContext);
 
   const [loading, setLoading] = useState(false);
@@ -57,7 +58,11 @@ export default function UploadModal() {
   };
 
   return (
-    <div className="w-[25rem] flex flex-col py-5 items-center border-2 border-[#505050] rounded-lg">
+    <div
+      className={`w-[25rem] flex flex-col py-5 items-center ${
+        windowed ? "" : "border-2 border-[#505050]"
+      } rounded-lg`}
+    >
       <img src={logo} className="w-32 h-32 mb-4" />
       <span className="text-[#919191] text-xl font-mono">Hey user</span>
       <span className="text-[#919191] text-xl font-mono">

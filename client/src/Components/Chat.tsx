@@ -72,57 +72,41 @@ export default function Chat() {
       // setQuery("");
       const element = document.getElementById("chat-bottom");
       //@ts-ignore
-      // element.scrollIntoView("smooth");
+      element.scrollIntoView("smooth");
       // const data = JSON.stringify({
       //   messages: messages,
       // });
-      // console.log(data);
-      // axios
-      //   .post("http://localhost:8000/api/chat/queries/", data, {
-      //     headers: {
-      //       "Content-Type": "application/x-www-form-urlencoded",
-      //     },
-      //   })
-      //   .then((response) => {
-      //     // console.log(response.data);
-      //     messages = messages.concat([
-      //       { role: "assistant", content: response.data.response },
-      //     ]);
-      //     setMessagesOld(messages);
-      //     // console.log("ooooooooo", messages);
-      //     setTimeout(() => {
-      //       convo = convo.concat([response.data.response]);
-      //       setChat(convo);
-      //       setLoading(false);
-      //       //@ts-ignore
-      //       element.scrollIntoView({
-      //         behavior: "smooth",
-      //       });
-      //     }, 500);
-      //   })
-      //   .catch((error) => {
-      //     setLoading(false);
-      //     console.log(error);
-      //   });
-      messages = messages.concat([
-        {
-          role: "assistant",
-          content: "Hi how can i help you today. Wat ra sudheep!!!",
-        },
-      ]);
-      setMessagesOld(messages);
-      // console.log("ooooooooo", messages);
-      setTimeout(() => {
-        convo = convo.concat([
-          "Hi how can i help you today. Wat ra sudheep!!! some more text for line break",
-        ]);
-        setChat(convo);
-        setLoading(false);
-        //@ts-ignore
-        element.scrollIntoView({
-          behavior: "smooth",
+      const data = JSON.stringify({
+        query: query,
+      });
+      console.log(data);
+      axios
+        .post("http://localhost:8000/api/chat/queries/", data, {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+        .then((response) => {
+          // console.log(response.data);
+          messages = messages.concat([
+            { role: "assistant", content: response.data.response },
+          ]);
+          setMessagesOld(messages);
+          // console.log("ooooooooo", messages);
+          setTimeout(() => {
+            convo = convo.concat([response.data.response]);
+            setChat(convo);
+            setLoading(false);
+            //@ts-ignore
+            element.scrollIntoView({
+              behavior: "smooth",
+            });
+          }, 500);
+        })
+        .catch((error) => {
+          setLoading(false);
+          console.log(error);
         });
-      }, 500);
     }
   };
 
@@ -144,25 +128,34 @@ export default function Chat() {
               `}
             >
               <div
-                className={`w-fit flex flex-row gap-4 px-2 md:px-4 py-3.5 md:py-5 ${
-                  index % 2 === 0 ? "bg-[#233556] rounded-[10px] " : "bg-[#313131] rounded-[10px] "
+                className={`w-fit flex flex-col gap-2 ${
+                  index % 2 === 0 ? "items-end" : "items-start"
                 }`}
               >
                 {index % 2 !== 0 && (
-                  // <CrownFilled className="bg-[#919191] text-black text-[1.7rem] rounded-[10px] p-1" />
-                  <img src={logoBW} className="w-10 h-10 " />
+                  <div className="flex items-end gap-2">
+                    <img src={logoBW} className="w-6 h-6" />
+                    <span className="text-white text-opacity-80">Sensei</span>
+                  </div>
                 )}
-
-                <Typography className="text-white whitespace-pre-wrap text-opacity-90 text-base font-inter tracking-wider">
+                {index % 2 === 0 && (
+                  <div className="flex items-end gap-2">
+                    <span className="text-white text-opacity-80">User</span>
+                    <UserOutlined className="bg-[#919191] w-6 h-6 flex justify-center text-black text-opacity-60 text-[1.7rem] rounded-full p-1" />
+                  </div>
+                )}
+                <Typography
+                  className={`text-white p-2 ${
+                    index % 2 === 0
+                      ? "bg-[#233556] rounded-[10px] "
+                      : "bg-[#313131] rounded-[10px] "
+                  } whitespace-pre-wrap text-opacity-90 text-base font-inter tracking-wider`}
+                >
                   {chat}
                 </Typography>
-
-                {index % 2 === 0 && (
-                  <UserOutlined className="bg-[#919191] w-10 h-10 flex justify-center text-black text-opacity-60 text-[1.7rem] rounded-full p-1" />
-                )}
               </div>
               <div
-                className={`ml-2 gap-5 md:gap-3 pt-3.5 md:pt-5 flex flex-col items-start ${
+                className={`ml-2 gap-5 md:gap-3 pt-4 flex flex-col items-start ${
                   index % 2 === 0 ? "hidden" : "flex"
                 }`}
               >

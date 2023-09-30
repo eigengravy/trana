@@ -9,6 +9,8 @@ export const GlobalContext = createContext({
   setUserPrompt: (value: string) => {},
   uploaded: false as boolean,
   setUploaded: (value: boolean) => {},
+  windowed: false as boolean,
+  setWindowed: (value: boolean) => {},
 });
 
 export const GlobalProvider = (props: any) => {
@@ -16,6 +18,8 @@ export const GlobalProvider = (props: any) => {
   const [text, setText] = useState<string>("");
   const [userPrompt, setUserPrompt] = useState<string>("");
   const [uploaded, setUploaded] = useState(false);
+  const [windowed, setWindowed] = useState(false);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -27,6 +31,8 @@ export const GlobalProvider = (props: any) => {
         setUserPrompt,
         uploaded,
         setUploaded,
+        windowed,
+        setWindowed,
       }}
     >
       {props.children}
