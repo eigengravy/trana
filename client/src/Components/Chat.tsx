@@ -81,32 +81,53 @@ export default function Chat() {
       });
       console.log(data);
       axios
-        .post("http://localhost:8000/api/chat/queries/", data, {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        })
-        .then((response) => {
-          // console.log(response.data);
-          messages = messages.concat([
-            { role: "assistant", content: response.data.response },
-          ]);
-          setMessagesOld(messages);
-          // console.log("ooooooooo", messages);
+      .post("http://localhost:8000/api/chat/queries/", data, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+      .then((response) => {
+        // console.log(response.data);
+        console.log(response.data.received)
+        if (response.data.received) {
           setTimeout(() => {
-            convo = convo.concat([response.data.response]);
-            setChat(convo);
-            setLoading(false);
-            //@ts-ignore
-            element.scrollIntoView({
-              behavior: "smooth",
-            });
-          }, 500);
-        })
-        .catch((error) => {
-          setLoading(false);
-          console.log(error);
-        });
+            // getAnswer(query);
+            console.log("gay")
+          }, 2000);
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+      // axios
+      //   .post("http://localhost:8000/api/chat/queries/", data, {
+      //     headers: {
+      //       "Content-Type": "application/x-www-form-urlencoded",
+      //     },
+      //   })
+      //   .then((response) => {
+      //     console.log(response)
+      //     // console.log(response.data);
+      //     messages = messages.concat([
+      //       { role: "assistant", content: response.data.received },
+      //     ]);
+      //     setMessagesOld(messages);
+      //     // console.log("ooooooooo", messages);
+      //     setTimeout(() => {
+      //       convo = convo.concat([response.data.received]);
+      //       setChat(convo);
+      //       setLoading(false);
+      //       //@ts-ignore
+      //       element.scrollIntoView({
+      //         behavior: "smooth",
+      //       });
+      //     }, 500);
+      //   })
+      //   .catch((error) => {
+      //     setLoading(false);
+      //     console.log(error);
+      //   });
     }
   };
 

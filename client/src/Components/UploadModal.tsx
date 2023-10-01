@@ -31,6 +31,37 @@ export default function UploadModal() {
   const [loading, setLoading] = useState(false);
   const [csvfile, setCsvfile] = useState<any>();
 
+  const getSite = () => {
+    const data = JSON.stringify({
+      url: url,
+    });
+    console.log(data);
+    axios
+      .post("http://localhost:8000/api/scrape/getSite/", data, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (!response.data.completed) {
+          setTimeout(() => {
+            getSite();
+          }, 2000);
+        } else {
+          message.success(`Site data received`);
+          setTimeout(() => {
+            setUploaded(true);
+            setLoading(false);
+          }, 500);
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+  };
+
   const handleSubmit = () => {
     setLoading(true);
     const data = JSON.stringify({
@@ -45,11 +76,11 @@ export default function UploadModal() {
       })
       .then((response) => {
         console.log(response.data);
-        message.success(`Site data received`);
-        setTimeout(() => {
-          setUploaded(true);
-          setLoading(false);
-        }, 500);
+        if (response.data.received) {
+          setTimeout(() => {
+            getSite();
+          }, 2000);
+        }
       })
       .catch((error) => {
         setLoading(false);

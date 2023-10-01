@@ -8,6 +8,8 @@ from django.http import JsonResponse
 import csv
 import json
 import requests
+import redis
+import httpx
 
 class FilesViewSet(viewsets.ModelViewSet):
     queryset = Files.objects.all()
@@ -42,6 +44,7 @@ class FilesViewSet(viewsets.ModelViewSet):
 class ScrapperViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['post'])
     def queries(self, request): 
+        r = redis.Redis(host='localhost', port=6379, decode_responses=True)
         data = json.loads(request.body.decode('utf-8'))
         site_url=data.get('url')
         
@@ -49,16 +52,58 @@ class ScrapperViewSet(viewsets.ViewSet):
         # print(response)
         
         # return JsonResponse({'messages': messages, 'response' : response})
-        return JsonResponse({'response' : f"Url received {site_url}"})
+        return JsonResponse({'received' : True})
+    
+    @action(detail=False, methods=['post'])
+    def completed(self, request): 
+        r = redis.Redis(host='localhost', port=6379, decode_responses=True)
+        data = json.loads(request.body.decode('utf-8'))
+        site_url=data.get('url')
+        r.set(site_url, True)
+        print(site_url)
+        # print(response)
+        
+        # return JsonResponse({'messages': messages, 'response' : response})
+        # return JsonResponse({'response' : f"Url received {site_url}"})
+
+    @action(detail=False, methods=['post'])
+    def getSite(self, request): 
+        r = redis.Redis(host='localhost', port=6379, decode_responses=True)
+        data = json.loads(request.body.decode('utf-8'))
+        site_url=data.get('url')
+        completed = r.get(site_url)
+        print(site_url, completed)
+        # print(response)
+        
+        return JsonResponse({'site_url': site_url, 'completed' : completed})
+        # return JsonResponse({'response' : f"Url received {site_url}"})
 
 class ChatViewSet(viewsets.ViewSet):
+    r = redis.Redis(host='localhost', port=6379, decode_responses=True)
     @action(detail=False, methods=['post'])
     def queries(self, request): 
         data = json.loads(request.body.decode('utf-8'))
         query=data.get('query')
+        site_url=data.get('url')
+
+        # httpx.post("http://localhost:8000/infer", data={"url": site_url, "query": query})
 
         # url = settings.GPT_URL
-        answer = "Hi... How can i help you today. Wat ra Sudheep!!! Some more text for line break."
+        # answer = "Hi... How can i help you today. Wat ra Sudheep!!! Some more text for line break."
         
         # return JsonResponse({'messages': messages, 'response' : response})
-        return JsonResponse({'response' : answer})
+        return JsonResponse({'received' : "True"})
+    
+    @action(detail=False, methods=['post'])
+    def answer(self, request): 
+        data = json.loads(request.body.decode('utf-8'))
+        query=data.get('query')
+        site_url=data.get('url')
+
+        httpx.post("http://localhost:8000/infer", data={"url": site_url, "query": query})
+
+        # url = settings.GPT_URL
+        # answer = "Hi... How can i help you today. Wat ra Sudheep!!! Some more text for line break."
+        
+        # return JsonResponse({'messages': messages, 'response' : response})
+        return JsonResponse({'received' : True})
