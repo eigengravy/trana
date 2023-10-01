@@ -15,8 +15,8 @@ import {
   SyncOutlined,
   CopyOutlined,
 } from "@ant-design/icons";
-import logo from "../Assets/trana.png";
-import logoBW from "../Assets/tranabw.png";
+import logo from "../Assets/liama.png";
+import logoBW from "../Assets/liama.png";
 import axios from "axios";
 import { GlobalContext } from "../Context/GlobalContext";
 
@@ -30,7 +30,7 @@ export default function Chat() {
   const [messagesOld, setMessagesOld] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const { uploaded, setUploaded, text, setText, userPrompt } =
+  const { uploaded, setUploaded, text, setText, userPrompt, url } =
     useContext(GlobalContext);
 
   useEffect(() => {
@@ -113,6 +113,7 @@ export default function Chat() {
       // });
       const data = JSON.stringify({
         query: query,
+        url: url,
       });
       console.log(data);
       axios
