@@ -47,11 +47,11 @@ class ScrapperViewSet(viewsets.ViewSet):
         r = redis.Redis(host='localhost', port=6379, decode_responses=True)
         data = json.loads(request.body.decode('utf-8'))
         site_url=data.get('url')
+        r.set(site_url, False)
+
         
         print(site_url)
-        # print(response)
-        
-        # return JsonResponse({'messages': messages, 'response' : response})
+
         return JsonResponse({'received' : True})
     
     @action(detail=False, methods=['post'])
@@ -61,10 +61,7 @@ class ScrapperViewSet(viewsets.ViewSet):
         site_url=data.get('url')
         r.set(site_url, True)
         print(site_url)
-        # print(response)
-        
-        # return JsonResponse({'messages': messages, 'response' : response})
-        # return JsonResponse({'response' : f"Url received {site_url}"})
+
 
     @action(detail=False, methods=['post'])
     def getSite(self, request): 
@@ -73,37 +70,39 @@ class ScrapperViewSet(viewsets.ViewSet):
         site_url=data.get('url')
         completed = r.get(site_url)
         print(site_url, completed)
-        # print(response)
         
         return JsonResponse({'site_url': site_url, 'completed' : completed})
-        # return JsonResponse({'response' : f"Url received {site_url}"})
 
 class ChatViewSet(viewsets.ViewSet):
-    r = redis.Redis(host='localhost', port=6379, decode_responses=True)
     @action(detail=False, methods=['post'])
     def queries(self, request): 
+        r = redis.Redis(host='localhost', port=6379, decode_responses=True)
         data = json.loads(request.body.decode('utf-8'))
         query=data.get('query')
         site_url=data.get('url')
+        r.set(site_url, False)
 
-        # httpx.post("http://localhost:8000/infer", data={"url": site_url, "query": query})
+        httpx.post("http://localhost:6969/infer", data={"url": site_url, "query": query})
 
-        # url = settings.GPT_URL
-        # answer = "Hi... How can i help you today. Wat ra Sudheep!!! Some more text for line break."
-        
-        # return JsonResponse({'messages': messages, 'response' : response})
+
         return JsonResponse({'received' : "True"})
     
     @action(detail=False, methods=['post'])
     def answer(self, request): 
+        r = redis.Redis(host='localhost', port=6379, decode_responses=True)
         data = json.loads(request.body.decode('utf-8'))
         query=data.get('query')
         site_url=data.get('url')
+        answer=data.get('answer')
+        r.set(query, answer)
 
-        httpx.post("http://localhost:8000/infer", data={"url": site_url, "query": query})
-
-        # url = settings.GPT_URL
-        # answer = "Hi... How can i help you today. Wat ra Sudheep!!! Some more text for line break."
+    @action(detail=False, methods=['post'])
+    def getAnswer(self, request): 
+        r = redis.Redis(host='localhost', port=6379, decode_responses=True)
+        data = json.loads(request.body.decode('utf-8'))
+        query=data.get('query')
+        answer = r.get(query)
+        print(query, answer)
         
-        # return JsonResponse({'messages': messages, 'response' : response})
-        return JsonResponse({'received' : True})
+        return JsonResponse({'query': query, 'answer' : answer})
+        

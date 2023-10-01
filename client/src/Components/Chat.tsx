@@ -56,10 +56,56 @@ export default function Chat() {
       //  incorporate it into your responses as needed. For example, if the user mentions a specific analysis method they want to be used, acknowledge it and apply the
       //  method in your responses.`;
       // let query = userPrompt && userPrompt.length > 0 ? prompt + extra : prompt;
-      let query = "Hi how can i help you today.";
+      let query = "Rspond with site name and a welcome message like : Hi how can i help you today.";
       handleQuery(query);
     }
   }, [uploaded]);
+
+  const getAnswer = (query: string) => {
+    let convo = chat;
+    let messages = messagesOld;
+    const element = document.getElementById("chat-bottom");
+    //@ts-ignore
+    element.scrollIntoView("smooth");
+    const data = JSON.stringify({
+      query: query,
+    });
+    console.log(data);
+    axios
+      .post("http://localhost:8000/api/chat/getAnswer/", data, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        // console.log(response.data);
+        if (response.data.answer === false) {
+          setTimeout(() => {
+            getAnswer(query);
+          }, 2000);
+        } else {
+          messages = messages.concat([
+            { role: "assistant", content: response.data.answer },
+          ]);
+          setMessagesOld(messages);
+          // console.log("ooooooooo", messages);
+          setTimeout(() => {
+            convo = convo.concat([response.data.answer]);
+            setChat(convo);
+            setLoading(false);
+            //@ts-ignore
+            element.scrollIntoView({
+              behavior: "smooth",
+            });
+          }, 500);
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+  };
 
   const handleQuery = (query: string) => {
     setLoading(true);
@@ -81,53 +127,24 @@ export default function Chat() {
       });
       console.log(data);
       axios
-      .post("http://localhost:8000/api/chat/queries/", data, {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      })
-      .then((response) => {
-        // console.log(response.data);
-        console.log(response.data.received)
-        if (response.data.received) {
-          setTimeout(() => {
-            // getAnswer(query);
-            console.log("gay")
-          }, 2000);
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log(error);
-      });
-      // axios
-      //   .post("http://localhost:8000/api/chat/queries/", data, {
-      //     headers: {
-      //       "Content-Type": "application/x-www-form-urlencoded",
-      //     },
-      //   })
-      //   .then((response) => {
-      //     console.log(response)
-      //     // console.log(response.data);
-      //     messages = messages.concat([
-      //       { role: "assistant", content: response.data.received },
-      //     ]);
-      //     setMessagesOld(messages);
-      //     // console.log("ooooooooo", messages);
-      //     setTimeout(() => {
-      //       convo = convo.concat([response.data.received]);
-      //       setChat(convo);
-      //       setLoading(false);
-      //       //@ts-ignore
-      //       element.scrollIntoView({
-      //         behavior: "smooth",
-      //       });
-      //     }, 500);
-      //   })
-      //   .catch((error) => {
-      //     setLoading(false);
-      //     console.log(error);
-      //   });
+        .post("http://localhost:8000/api/chat/queries/", data, {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+        .then((response) => {
+          // console.log(response.data);
+          console.log(response.data.received);
+          if (response.data.received) {
+            setTimeout(() => {
+              getAnswer(query);
+            }, 1000);
+          }
+        })
+        .catch((error) => {
+          setLoading(false);
+          console.log(error);
+        });
     }
   };
 
