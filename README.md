@@ -21,4 +21,4 @@ using BeautifulSoup and caches the  embeddings into a persistent Chroma vectorst
 
 ## Credits
 
-Built by [Sarang](https://github.com/eigengravy) and [John](https://github.com/jxhnsebastian) for the [Moveworks](moveworks.com) Generative AI Hack-AI-thon 2023 at BITS Goa.
+Built by [Sarang](https://github.com/eigengravy) and [John](https://github.com/jxhnsebastian) for the [Moveworks](https://moveworks.com) Generative AI Hack-AI-thon 2023 at BITS Goa.
