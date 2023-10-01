@@ -1,6 +1,8 @@
+<img src="client/public/logo512.png?raw=true" width="64" title="Trana">
+
 # Trana
 
-Co-pilot for the web powered by Llama2.
+Co-pilot for the web. 
 
 ## Architecture
 
@@ -17,4 +19,6 @@ using BeautifulSoup and caches the  embeddings into a persistent Chroma vectorst
 <img src="assets/ui-2.jpg?raw=true" width="350" title="Chat UI">
 </p>
 
+## Credits
 
+Built by [Sarang](https://github.com/eigengravy) and [John](https://github.com/jxhnsebastian) for the [Moveworks](moveworks.com) Generative AI Hack-AI-thon 2023 at BITS Goa.
