@@ -80,8 +80,9 @@ export default function Chat() {
       .then((response) => {
         console.log(response);
         // console.log(response.data);
-        if (response.data.answer === false) {
+        if (response.data.answer === "false") {
           setTimeout(() => {
+            console.log("Pinging for answer...")
             getAnswer(query);
           }, 2000);
         } else {

@@ -54,7 +54,7 @@ class ScrapperViewSet(viewsets.ViewSet):
         r = redis.Redis(host="localhost", port=6379, decode_responses=True)
         data = json.loads(request.body.decode("utf-8"))
         site_url = data.get("url")
-        r.set(site_url, False)
+        r.set(site_url, "false")
         httpx.post("http://localhost:6969/infer", data={"url": site_url, "query": ""})
 
         print(site_url)
@@ -66,7 +66,7 @@ class ScrapperViewSet(viewsets.ViewSet):
         r = redis.Redis(host="localhost", port=6379, decode_responses=True)
         data = json.loads(request.body.decode("utf-8"))
         site_url = data.get("url")
-        r.set(site_url, True)
+        r.set(site_url, "true")
         print(site_url)
 
     @action(detail=False, methods=["post"])
@@ -87,13 +87,13 @@ class ChatViewSet(viewsets.ViewSet):
         data = json.loads(request.body.decode("utf-8"))
         query = data.get("query")
         site_url = data.get("url")
-        r.set(site_url, False)
+        r.set(query, "false")
 
         httpx.post(
             "http://localhost:6969/infer", data={"url": site_url, "query": query}
         )
 
-        return JsonResponse({"received": "True"})
+        return JsonResponse({"received": True})
 
     @action(detail=False, methods=["post"])
     def answer(self, request):

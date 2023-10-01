@@ -44,8 +44,9 @@ export default function UploadModal() {
       })
       .then((response) => {
         console.log(response.data);
-        if (!response.data.completed) {
+        if (response.data.completed === "false") {
           setTimeout(() => {
+            console.log("Pinging for site...")
             getSite();
           }, 2000);
         } else {
