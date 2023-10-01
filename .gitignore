@@ -1,2 +1,4 @@
 **/*.bin
 **/*.pyc
+vectordb/
+__pycache__
