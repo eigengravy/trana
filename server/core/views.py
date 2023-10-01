@@ -65,7 +65,7 @@ class ScrapperViewSet(viewsets.ViewSet):
     def completed(self, request):
         r = redis.Redis(host="localhost", port=6379, decode_responses=True)
         data = json.loads(request.body.decode("utf-8"))
-        site_url = data.get("url")
+        site_url = data["url"]
         r.set(site_url, "true")
         print(site_url)
 
@@ -99,9 +99,10 @@ class ChatViewSet(viewsets.ViewSet):
     def answer(self, request):
         r = redis.Redis(host="localhost", port=6379, decode_responses=True)
         data = json.loads(request.body.decode("utf-8"))
-        query = data.get("query")
-        site_url = data.get("url")
-        answer = data.get("answer")
+        print(data)
+        query = data["query"]
+        site_url = data["url"]
+        answer = data["answer"]
         r.set(query, answer)
 
     @action(detail=False, methods=["post"])

@@ -43,9 +43,10 @@ export default function Chat() {
 
   useEffect(() => {
     if (uploaded) {
-      // console.log(uploaded);
-      let query = "Rspond with site name and a welcome message like : Hi how can i help you today.";
-      handleQuery(query);
+      console.log(uploaded);
+      let query = "You are Trana, co-pilot for the web. Who are you?";
+      setChat([...chat, query]);
+      !loading && handleQuery(query);
     }
   }, [uploaded]);
 
@@ -70,7 +71,7 @@ export default function Chat() {
         // console.log(response.data);
         if (response.data.answer === "false") {
           setTimeout(() => {
-            console.log("Pinging for answer...")
+            console.log("Pinging for answer...");
             getAnswer(query);
           }, 2000);
         } else {
@@ -80,8 +81,8 @@ export default function Chat() {
           setMessagesOld(messages);
           // console.log("ooooooooo", messages);
           setTimeout(() => {
-            convo = convo.concat([response.data.answer]);
-            setChat(convo);
+            console.log(chat);
+            setChat([...chat, query, response.data.answer]);
             setLoading(false);
             //@ts-ignore
             element.scrollIntoView({
@@ -99,11 +100,9 @@ export default function Chat() {
   const handleQuery = (query: string) => {
     setLoading(true);
     console.log("Query : ", query);
-    let convo = chat;
     let messages = messagesOld.concat([{ role: "user", content: query }]);
     if (query !== "") {
-      convo = convo.concat([query]);
-      setChat(convo);
+      setChat([...chat, query]);
       // setQuery("");
       const element = document.getElementById("chat-bottom");
       //@ts-ignore

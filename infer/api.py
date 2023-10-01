@@ -87,8 +87,11 @@ def run_infer(query: str, url: str):  # noqa: F811
         )
 
     if query is not None:
+        print("here")
+
         vectordb = Chroma(
-            embedding=GPT4AllEmbeddings(), persist_directory=f"../vectordb/{key}"
+            embedding_function=GPT4AllEmbeddings(),
+            persist_directory=f"../vectordb/{key}",
         )
         print("load vec")
 
@@ -100,9 +103,12 @@ def run_infer(query: str, url: str):  # noqa: F811
 
         response = qa_chain({"query": query})  # {query: str, result: str}
         print("out")
-
-        answer = response["results"]
-        httpx.post("http://localhost:8000/api/chat/answer/", json={url, query, answer})
+        print(response)
+        answer = response["result"]
+        httpx.post(
+            "http://localhost:8000/api/chat/answer/",
+            json={"url": url, "query": query, "answer": answer},
+        )
     else:
         httpx.post(
             "http://localhost:8000/api/scrape/completed/",
