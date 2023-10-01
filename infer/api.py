@@ -61,14 +61,16 @@ def run_infer(query: str, url: str):  # noqa: F811
         )
 
         vectordb.persist()
+        httpx.post("http://localhost:6969/scrape/completed", data={url, query})
 
-    vectordb = Chroma(
-        embedding=GPT4AllEmbeddings(), persist_directory=f"../vectordb/{hash(url)}"
-    )
-    qa_chain = RetrievalQA.from_chain_type(
-        llm=GPT4All(model="./llama-2-7b-chat.ggmlv3.q4_0.bin", n_predict=512),
-        retriever=vectordb.as_retriever(search_kwargs={"k": 8}),
-    )
-    response = qa_chain({"query": query})  # {query: str, result: str}
-    answer = response["results"]
-    httpx.post("http://localhost:6969/chat/answer", data={url, query, answer})
+    if query != "":
+        vectordb = Chroma(
+            embedding=GPT4AllEmbeddings(), persist_directory=f"../vectordb/{hash(url)}"
+        )
+        qa_chain = RetrievalQA.from_chain_type(
+            llm=GPT4All(model="./llama-2-7b-chat.ggmlv3.q4_0.bin", n_predict=512),
+            retriever=vectordb.as_retriever(search_kwargs={"k": 8}),
+        )
+        response = qa_chain({"query": query})  # {query: str, result: str}
+        answer = response["results"]
+        httpx.post("http://localhost:6969/chat/answer", data={url, query, answer})
