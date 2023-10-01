@@ -13,8 +13,8 @@ using BeautifulSoup and caches the  embeddings into a persistent Chroma vectorst
 
 ## Screenshots
 <p float="left">
-<img src="assets/ui-1.jpg?raw=true" width="350" title="hover text">
-<img src="assets/ui-2.jpg?raw=true" width="350" title="hover text">
+<img src="assets/ui-1.jpg?raw=true" width="350" title="Trana">
+<img src="assets/ui-2.jpg?raw=true" width="350" title="Chat UI">
 </p>
 
 
