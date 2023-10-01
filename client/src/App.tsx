@@ -11,9 +11,9 @@ function App() {
   return (
     <div className="max-w-[100vw] min-h-[100vh] flex relative items-center justify-center bg-[#0A0A0A]">
       <div
-        className={`flex items-center justify-center border border-[#505050] rounded-lg absolute ${
+        className={`flex items-center justify-center rounded-lg absolute ${
           windowed
-            ? "w-[30vw] bottom-5 right-5 h-[60vh]"
+            ? "border border-[#505050] w-[30vw] bottom-5 right-5 h-[60vh]"
             : "w-[100vw] bottom-0 right-0 h-[100vh]"
         } `}
       >

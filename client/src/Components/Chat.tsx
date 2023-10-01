@@ -15,8 +15,8 @@ import {
   SyncOutlined,
   CopyOutlined,
 } from "@ant-design/icons";
-import logo from "../Assets/sensei.png";
-import logoBW from "../Assets/senseibw.png";
+import logo from "../Assets/trana.png";
+import logoBW from "../Assets/tranabw.png";
 import axios from "axios";
 import { GlobalContext } from "../Context/GlobalContext";
 
@@ -44,18 +44,6 @@ export default function Chat() {
   useEffect(() => {
     if (uploaded) {
       // console.log(uploaded);
-      // let prompt = `You have just received a CSV file containing data. The data in the CSV file is as follows: "${text}".You are now the "CSV Sensei", an AI expert in data analysis.
-      // Your primary task is to assist the user by providing precise quantitative data insights and answers to their queries regarding the uploaded data.To start the
-      // interaction, respond with a welcoming message: "Hi, I am CSV Sensei. How may I assist you today?" Then, provide a summary of the key data points and trends
-      // present in the uploaded CSV file. Focus on highlighting valuable insights that can be derived from the data using conventional data science methods and analysis
-      // techniques.As you respond to user queries, make sure your answers are insightful, informative, and based on your analysis of the data. Your goal is to provide
-      // actionable insights and help the user gain a deeper understanding of the information contained in the CSV file.Remember, your expertise lies in delivering data-driven
-      // insights that go beyond a simple copy of the data. Provide valuable answers that empower the user with knowledge they can use to make informed decisions or conclusions
-      // about the data.`;
-      // let extra = `The user has provided some additional information or analysis preferences as follows "${userPrompt}". Analyze the user's input and
-      //  incorporate it into your responses as needed. For example, if the user mentions a specific analysis method they want to be used, acknowledge it and apply the
-      //  method in your responses.`;
-      // let query = userPrompt && userPrompt.length > 0 ? prompt + extra : prompt;
       let query = "Rspond with site name and a welcome message like : Hi how can i help you today.";
       handleQuery(query);
     }
@@ -154,7 +142,7 @@ export default function Chat() {
       <Layout className="w-full relative">
         <div className="sticky top-0 h-fit z-10 bg-[#202123] flex items-center p-2 text-2xl font-bold font-mono text-white border-b-2 border-[#505050]">
           <img src={logo} className="w-10 h-10 mx-2" />
-          sensei.csv
+          trana
         </div>
         <Content className="max-w-[100vw] overflow-y-auto bg-[#202123] flex flex-col gap-4 items-center pt-6">
           {chat.map((chat, index) => (
@@ -174,7 +162,7 @@ export default function Chat() {
                 {index % 2 !== 0 && (
                   <div className="flex items-end gap-2">
                     <img src={logoBW} className="w-6 h-6" />
-                    <span className="text-white text-opacity-80">Sensei</span>
+                    <span className="text-white text-opacity-80">Trana</span>
                   </div>
                 )}
                 {index % 2 === 0 && (

@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import { GlobalContext } from "../Context/GlobalContext";
 import { message, Upload } from "antd";
-import logo from "../Assets/sensei.png";
+import logo from "../Assets/trana.png";
 import axios from "axios";
 
 const { Title } = Typography;
