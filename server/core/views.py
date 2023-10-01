@@ -55,7 +55,7 @@ class ScrapperViewSet(viewsets.ViewSet):
         data = json.loads(request.body.decode("utf-8"))
         site_url = data.get("url")
         r.set(site_url, "false")
-        httpx.post("http://localhost:6969/infer", data={"url": site_url, "query": ""})
+        httpx.post("http://localhost:6969/infer", json={"url": site_url, "query": None})
 
         print(site_url)
 
@@ -90,7 +90,7 @@ class ChatViewSet(viewsets.ViewSet):
         r.set(query, "false")
 
         httpx.post(
-            "http://localhost:6969/infer", data={"url": site_url, "query": query}
+            "http://localhost:6969/infer", json={"url": site_url, "query": query}
         )
 
         return JsonResponse({"received": True})
