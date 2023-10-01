@@ -111,7 +111,7 @@ export default function UploadModal() {
           if (event.key === "Enter" && !event.shiftKey) {
             event.preventDefault();
             url !== ""
-              ? handleSubmit()
+              ? !loading && handleSubmit()
               : message.error("Please enter a site url.");
           }
         }}
@@ -128,7 +128,7 @@ export default function UploadModal() {
           if (event.key === "Enter" && !event.shiftKey) {
             event.preventDefault();
             url !== ""
-              ? handleSubmit()
+              ? !loading && handleSubmit()
               : message.error("Please enter a site url.");
           }
         }}
