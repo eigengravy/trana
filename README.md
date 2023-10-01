@@ -1,18 +1,11 @@
-# csv-sensei
-This app enables you to upload csv files and interact with its data in a chat format with `openai/gpt-3.5-turbo`.
+# Trana
 
-### Specs
-- client - React, tailwind, Ant Design
-- server - Django
-- model - openai/gpt-3.5-turbo
+Co-pilot for the web powered by Llama2.
 
-## To get started
-client:
-```
-npm run start
-```
+## Architecture
 
-server:
-```
-py manage.py runserver
-```
+The project is divided in 3 modules.
+
+- Frontend : React.js frontend using the Ant Design component library.
+- Backend : Django backend using Redis for KV store.
+- Inference : FastAPI server running an inference endpoint for GPT4All's llama-2-7b-chat.ggmlv3.q4_0 powered by Langchain.
